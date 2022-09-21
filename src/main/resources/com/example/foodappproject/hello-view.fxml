@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="750.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.foodappproject.HelloController">
+<children>
+    <BorderPane fx:id="borderPane" prefHeight="750.0" prefWidth="350.0">
+        <top>
+            <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="350.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                <children>
+                    <AnchorPane prefHeight="48.0" prefWidth="365.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: white;">
+                        <children>
+                            <TextField fx:id="searchBar" layoutX="220.0" layoutY="12.0" prefHeight="25.0" prefWidth="131.0" />
+                            <Text fill="WHITE" layoutX="4.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Food Inventory system" textAlignment="CENTER" wrappingWidth="214.31336975097656">
+                                <font>
+                                    <Font name="Arial Bold" size="19.0" />
+                                </font>
+                            </Text>
+                        </children>
+                    </AnchorPane>
+                </children>
+            </HBox>
+        </top>
+        <left>
+            <VBox prefHeight="702.0" prefWidth="73.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                <children>
+                    <HBox id="burger" alignment="CENTER_LEFT" onMouseClicked="#burgerSearch" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="65.0">
+                        <children>
+                        <ImageView id="burgerImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../new-food-icons/burger.png" />
+                           </image></ImageView>
+                            <Text fx:id="burgerTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Burger">
+                           <font>
+                              <Font name="Arial Bold" size="13.0" />
+                           </font>
+                        </Text>
+                        </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                    </HBox>
+                    <HBox id="pizza" alignment="CENTER_LEFT" onMouseClicked="#pizzaSearch" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="65.0">
+                        <children>
+                        <ImageView id="pizzaImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../new-food-icons/pizza.png" />
+                           </image></ImageView>
+                            <Text fx:id="pizzaTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Pizza">
+                           <font>
+                              <Font name="Arial Bold" size="13.0" />
+                           </font></Text>
+                        </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                    </HBox>
+                    <HBox id="vegan" alignment="CENTER_LEFT" onMouseClicked="#veganSearch" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="65.0">
+                        <children>
+                        <ImageView id="veganImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../new-food-icons/vegan.png" />
+                           </image></ImageView>
+                            <Text fx:id="veganTitle" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vegan" translateX="-1.0">
+                           <font>
+                              <Font name="Arial Bold" size="13.0" />
+                           </font></Text>
+                        </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                    </HBox>
+                  <HBox prefHeight="370.0" prefWidth="78.0" />
+                  <HBox fx:id="basketBox" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="65.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="1.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../add-to-basket.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="30.0" layoutY="22.0" text="Basket" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <HBox fx:id="logoutBox" onMouseClicked="#logoutFunc" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="65.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="3.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../userLineThrough.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="35.0" layoutY="24.0" text="Leave" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#switchToAccountPage" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="3.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../user.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="35.0" layoutY="24.0" text="Login" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" onMouseClicked="#exitSystemFunc" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefHeight="64.0" prefWidth="78.0" translateX="5.0">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" layoutX="-3.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../exit.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="32.0" layoutY="24.0" text="Exit" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </HBox>
+                </children>
+            </VBox>
+        </left>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="277.0" BorderPane.alignment="CENTER">
+               <children>
+                  <GridPane fx:id="gridPane" prefHeight="652.0" prefWidth="277.0" style="-fx-grid-lines-visible: true; -fx-border-width: 1 0 0 0; -fx-border-color: white;">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                      <children>
+                         <ImageView id="1" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="60.0" />
+                         <ImageView id="2" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="60.0" GridPane.columnIndex="1" />
+                         <ImageView id="3" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="60.0" GridPane.rowIndex="1" />
+                         <ImageView id="4" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="60.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                         <ImageView id="5" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="60.0" GridPane.rowIndex="2" />
+                         <ImageView id="6" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="70.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                         <ImageView id="7" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="70.0" GridPane.rowIndex="3" />
+                         <ImageView id="8" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" translateY="80.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+                  <HBox prefHeight="60.0" prefWidth="277.0">
+                     <children>
+                        <AnchorPane prefHeight="55.0" prefWidth="277.0" style="-fx-border-color: black;">
+                           <children>
+                              <GridPane alignment="CENTER" layoutY="2.0" prefHeight="51.0" prefWidth="275.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Button fx:id="prevBtn" mnemonicParsing="false" onAction="#prevPage" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefWidth="45.0" style="-fx-background-radius: 10; -fx-background-color: lightblue;" text="Prev">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                    <Button fx:id="nextBtn" mnemonicParsing="false" onAction="#nextPage" onMouseEntered="#onHoverSideBar" onMouseExited="#outHoverSideBar" prefWidth="45.0" style="-fx-background-radius: 10; -fx-background-color: lightblue;" text="Next" GridPane.columnIndex="1">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <AnchorPane prefHeight="200.0" prefWidth="10.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+         </right>
+         <bottom>
+            <AnchorPane prefHeight="10.0" prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+         </bottom>
+    </BorderPane>
+</children>
+</AnchorPane>
