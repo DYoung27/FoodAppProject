@@ -56,7 +56,6 @@ public class HelloController implements Initializable {
             }
         }
     }
-
     public void searchItem(String newVal, int offset) {
         clearItem();
         if (Objects.equals(newVal, "burger")) {
