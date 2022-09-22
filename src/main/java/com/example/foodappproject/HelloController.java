@@ -44,7 +44,7 @@ public class HelloController implements Initializable {
     public HBox basketBox;
     static Boolean loggedIn;
     static String loginName = "";
-    static HashMap<String, String> basket = new HashMap<String, String>();
+    static ArrayList<String> basket = new ArrayList<>();
 
     public void clearItem() {
         gridPane.getChildren().removeIf(node -> node instanceof Label);
@@ -58,59 +58,59 @@ public class HelloController implements Initializable {
     }
     public void searchItem(String newVal, int offset) {
         clearItem();
-        if (Objects.equals(newVal, "burger")) {
+        if (!Objects.equals(newVal, "")) {
             newVal = newVal.replace(' ', '+');
-            String Url = String.format("https://api.spoonacular.com/food/products/search?query=%s&offset=%d&apiKey=3773caf1b91f4d93a3337e8477292ce4", newVal, offset);
+       //     String Url = String.format("https://api.spoonacular.com/food/products/search?query=%s&offset=%d&apiKey=3773caf1b91f4d93a3337e8477292ce4", newVal, offset);
             // Foods get = API.ValidateLink(Url);
             Foods get = API.ValidateLinkProto(seedData.burgers);
-            System.out.println(get.products);
+         //   System.out.println(get.products);
             ArrayList<Object> foods = get.products;
             globalFoods = Math.min(get.totalProducts, 990);
-            if (globalFoods < 8 && nextBtn.isVisible()) {
+            if (globalFoods <= 8 && nextBtn.isVisible()) {
                 nextBtn.setVisible(false);
             }
             int row, column, count;
             row = column = count = 0;
             if (foods != null) {
+                Gson gson = new Gson();
                 for (Object obj : foods) {
-                    Gson gson = new Gson();
                     String resFood = gson.toJson(obj);
                     Food food = gson.fromJson(resFood, Food.class);
-                    ImageView imgFrame = (ImageView) gridPane.getChildren().get(count);
-                    count++;
+                    if (food.title.toLowerCase().contains(newVal.toLowerCase())) {
+                        ImageView imgFrame = (ImageView) gridPane.getChildren().get(count);
+                        count++;
 
-                    Label title = new Label();
+                        ImageGetter foodImg = new ImageGetter(food.image);
 
-                    ImageGetter foodImg = new ImageGetter(food.image);
+                        imgFrame.setImage(foodImg.img);
+                        imgFrame.setOnMouseClicked(mouseEvent -> {
+                            try {
+                                switchToItemPage(mouseEvent, food.id - 1);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                        imgFrame.setCursor(Cursor.HAND);
 
-                    imgFrame.setImage(foodImg.img);
-                    imgFrame.setOnMouseClicked(mouseEvent -> {
-                        try {
-                            switchToItemPage(mouseEvent, food.id - 1);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+
+                        Label title = new Label();
+                        title.setFont(Font.font(15));
+    //                    title.setWrapText(true);
+    //                    title.setMaxWidth(135);
+    //                    title.setMaxHeight(40);
+                        title.setText(food.title);
+                        title.setTextAlignment(TextAlignment.CENTER);
+                        gridPane.add(title, column, row);
+
+
+                        if (column == 0) {
+                            column++;
                         }
-                    });
-                    imgFrame.setCursor(Cursor.HAND);
-
-
-                    title.setFont(Font.font(15));
-//                    title.setWrapText(true);
-//                    title.setMaxWidth(135);
-//                    title.setMaxHeight(40);
-                    title.setText(food.title);
-                    title.setTextAlignment(TextAlignment.CENTER);
-
-
-                    gridPane.add(title, column, row);
-
-
-                    if (column == 0) {
-                        column++;
-                    } else if (column == 1) {
-                        if (row == 3) break;
-                        column--;
-                        row++;
+                        else if (column == 1) {
+                            if (row == 3) break;
+                            column--;
+                            row++;
+                        }
                     }
                 }
             }
@@ -121,29 +121,34 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println(API.ValidateLinkProto(seedData.burgers));
-        hideLogoutFunc();
-        seedData.populate();
+        // check if logged in
+        if(HelloController.loggedIn) showLoginFunc();
+        else hideLogoutFunc();
+
+        // set buttons to default invisible
         prevBtn.setVisible(false);
         nextBtn.setVisible(false);
 
 
         gridPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        // search bar listener to detect changes and change the food products displayed accordingly
+        //NOT AVAILABLE WHILE SPOONACULAR ARE UNDER MAINTENANCE
         searchBar.textProperty().addListener(new ChangeListener<>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldVal, String newVal) {
                 offset = 0;
-                if (prevBtn.isVisible()) {
-                    prevBtn.setVisible(false);
-                }
-
-                if (!newVal.isEmpty() && !nextBtn.isVisible()) {
-                    nextBtn.setVisible(true);
-                    setShadow(nextBtn);
-                }
-                else if (newVal.isEmpty()) {
-                    nextBtn.setVisible(false);
-                }
+//                if (prevBtn.isVisible()) {
+//                    prevBtn.setVisible(false);
+//                }
+//
+//                if (!newVal.isEmpty() && !nextBtn.isVisible()) {
+//                    //nextBtn.setVisible(true);
+//                    setShadow(nextBtn);
+//                }
+//                else if (newVal.isEmpty()) {
+//                    nextBtn.setVisible(false);
+//                }
                 searchItem(newVal, offset);
             }
         });
@@ -154,7 +159,7 @@ public class HelloController implements Initializable {
 
         if (offset < globalFoods) {
             if(!prevBtn.isVisible()) {
-                prevBtn.setVisible(true);
+             //   prevBtn.setVisible(true);
                 setShadow(prevBtn);
             }
             offset += 8;
@@ -170,7 +175,7 @@ public class HelloController implements Initializable {
 
         if (offset != 0) {
             if(!nextBtn.isVisible()) {
-                nextBtn.setVisible(true);
+               // nextBtn.setVisible(true);
                 setShadow(nextBtn);
             }
             offset -= 8;
@@ -245,29 +250,34 @@ public class HelloController implements Initializable {
         HelloController.basket.clear();
         hideLogoutFunc();
     }
-    public void hideLogoutFunc() {
-        if (HelloController.loggedIn) {
-            logoutBox.setOpacity(1);
-            logoutBox.setOnMouseClicked(this::logoutFunc);
-            logoutBox.setCursor(Cursor.HAND);
-            basketBox.setOpacity(1);
-            basketBox.setOnMouseClicked(mouseEvent -> {
-                try {
-                    switchToBasketPage(mouseEvent);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            basketBox.setCursor(Cursor.HAND);
 
+    // hide Logout button when logged out
+    public void hideLogoutFunc() {
+        logoutBox.setOpacity(0);
+        logoutBox.setOnMouseClicked(null);
+        logoutBox.setCursor(Cursor.DEFAULT);
+        basketBox.setOpacity(0);
+        basketBox.setOnMouseClicked(null);
+        basketBox.setCursor(Cursor.DEFAULT);
+
+        if(!HelloController.basket.isEmpty()) {
+            HelloController.basket.clear();
         }
-        else {
-            logoutBox.setOpacity(0);
-            logoutBox.setOnMouseClicked(null);
-            logoutBox.setCursor(Cursor.DEFAULT);
-            basketBox.setOpacity(0);
-            basketBox.setOnMouseClicked(null);
-            basketBox.setCursor(Cursor.DEFAULT);
-        }
+    }
+
+    // show logout button when logged in
+    public void showLoginFunc() {
+        logoutBox.setOpacity(1);
+        logoutBox.setOnMouseClicked(this::logoutFunc);
+        logoutBox.setCursor(Cursor.HAND);
+        basketBox.setOpacity(1);
+        basketBox.setOnMouseClicked(mouseEvent -> {
+            try {
+                switchToBasketPage(mouseEvent);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        basketBox.setCursor(Cursor.HAND);
     }
 }

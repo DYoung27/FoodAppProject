@@ -18,7 +18,6 @@ public class API {
             Gson gson = new Gson();
             String resFood = gson.toJson(obj);
             Food food = gson.fromJson(resFood, Food.class);
-            System.out.println(food.id);
         }
     }
     public static Foods ValidateLink(String link) {
@@ -29,10 +28,9 @@ public class API {
             HttpRequest req = HttpRequest.newBuilder(URI.create(link)).GET().build();
             HttpResponse<String> res = client.send(req,
                     HttpResponse.BodyHandlers.ofString());
+
             String apiRes = res.body();
-
             Gson gson = new Gson();
-
             return gson.fromJson(apiRes, Foods.class);
 
         } catch (IOException | InterruptedException e) {
@@ -58,7 +56,6 @@ public class API {
             HttpResponse<String> res = client.send(req,
                     HttpResponse.BodyHandlers.ofString());
             String apiRes = res.body();
-
             Gson gson = new Gson();
 
             return gson.fromJson(apiRes, Item.class);
@@ -71,8 +68,7 @@ public class API {
         // HttpRequest req = HttpRequest.newBuilder(URI.create(link)).GET().build();
 
         Gson gson = new Gson();
-        seedData apiRes = new seedData();
-        return gson.fromJson(seedData.burgerIndex.get(id), Item.class);
+        return gson.fromJson(seedData.burgerIndex[id], Item.class);
 
     }
 }

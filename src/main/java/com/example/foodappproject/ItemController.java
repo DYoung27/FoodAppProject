@@ -2,6 +2,7 @@ package com.example.foodappproject;
 
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -26,6 +27,7 @@ public class ItemController {
     public ScrollPane scrollBox;
     public ScrollPane descScrollBox;
     public VBox descriptionBox;
+    public Button addButton;
 
     public void setItem(Item i) {
         this.item = i;
@@ -35,6 +37,7 @@ public class ItemController {
         System.out.println(item.badges);
         productTitle.setText(item.title);
         productTitle.setFont(Font.font(30));
+        toggleButton();
 
         ImageGetter itemImg = new ImageGetter(item.image);
         productImg.setImage(itemImg.img);
@@ -80,6 +83,23 @@ public class ItemController {
         vBox.setMinSize(sBox.getWidth(), sBox.getHeight());
         if (sBox.getHeight() > vBox.getHeight()) {
             sBox.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        }
+    }
+
+    public void addToBasket(ActionEvent event) {
+        HelloController.basket.add(item.title);
+        System.out.println(HelloController.basket);
+    }
+    public void toggleButton () {
+        if (HelloController.loggedIn) {
+            addButton.setOpacity(1);
+            addButton.setCursor(Cursor.HAND);
+            addButton.setOnAction(this::addToBasket);
+        }
+        else {
+            addButton.setOpacity(0);
+            addButton.setCursor(Cursor.DEFAULT);
+            addButton.setOnAction(null);
         }
     }
 }

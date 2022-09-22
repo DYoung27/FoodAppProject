@@ -19,7 +19,7 @@ public class HelloApplication extends Application {
     // alt: https://i.pinimg.com/736x/38/e8/a8/38e8a81543c479e58f523d5b21c0208d.jpg
 
         stage.getIcons().add(icon);
-        stage.setTitle("Food Searching system");
+        stage.setTitle("Food Inventory system");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

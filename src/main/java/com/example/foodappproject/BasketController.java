@@ -16,19 +16,17 @@ import java.util.ResourceBundle;
 public class BasketController implements Initializable{
     private final SceneController switcher = new SceneController();
     public Button homeBtn;
-    public ListView basketList;
+    public ListView<String> basketList;
+    public Button deleteBtn;
+    public Button clearBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<String> items = FXCollections.observableArrayList();
+        // ObservableList<String> items = FXCollections.observableArrayList();
         //items.addAll(HelloController.basket.keySet());
-        items.addAll(
-                "Adam", "Alex", "Alfred", "Albert",
-                "Brenda", "Connie", "Derek", "Donny",
-                "Lynne", "Myrtle", "Rose", "Rudolph",
-                "Tony", "Trudy", "Williams", "Zach"
-        );
+        basketList.getItems().addAll(HelloController.basket);
+
         ImageView homeIconFrame = new ImageView();
         Image homeIcon = new Image("https://www.nicepng.com/png/full/115-1153942_white-home-icon-png-white-home-logo-transparent.png");
 
@@ -48,5 +46,18 @@ public class BasketController implements Initializable{
 
     private void switchToMainPage(ActionEvent event) throws IOException {
         switcher.switchToMainPage(event);
+    }
+
+    public void deleteItem(ActionEvent event) {
+        int index = basketList.getSelectionModel().getSelectedIndex();
+        HelloController.basket.remove(index);
+        basketList.getItems().clear();
+        basketList.getItems().addAll(HelloController.basket);
+    }
+
+    public void clearItems(ActionEvent event) {
+        HelloController.basket.clear();
+        basketList.getItems().clear();
+
     }
 }
